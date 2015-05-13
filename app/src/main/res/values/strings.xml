@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Instalador Eduroam</string>
+    <string name="action_settings">Configurações</string>
+    <string name="title_activity_adicionar_eduroam">AdicionarEduroamActivity</string>
+    <string name="title_activity_home">Inicial</string>
+    <string name="label_button_adicionar">Adicionar Rede Wi-Fi</string>
+    <string name="label_ssid">SSID da Rede</string>
+    <string name="example_ssid">(eduroam, WIFI-INF)</string>
+    <string name="label_user">Login Único</string>
+    <string name="example_user">(xxxxxx@ufg.br)</string>
+    <string name="label_password">Senha</string>
+    <string name="label_button_conectar">Conectar</string>
+    <string name="label_boas_vindas">Bem-vindo à Eduroam do Instituto de Informática da Universidade Federal de Goiás</string>
+    <string name="lable_lembrar_senha">Lembrar Senha?</string>
+    <string name="lable_exibir_senha">Exibir Senha</string>
+
+    <string name="prefs_ssid">prefs_ssid</string>
+    <string name="prefs_ssid_default">"\"eduroam\""</string>
+    <string name="prefs_usuario">prefs_usuario</string>
+    <string name="prefs_senha">prefs_senha</string>
+
+
+    <string name="uri_site_inf">http://www.inf.ufg.br/</string>
+
+
+</resources>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--SSID-->
+    <EditTextPreference
+        android:defaultValue="@string/pref_ssid_default"
+        android:inputType="text"
+        android:key="@string/pref_ssid_key"
+        android:singleLine="true"
+        android:title="@string/pref_ssid_label" />
+
+    <!--Salvar Senha-->
+    <CheckBoxPreference
+        android:defaultValue="@string/pref_salvar_senha_default"
+        android:key="@string/pref_salvar_senha_key"
+        android:title="@string/pref_salvar_senha_label" />
+
+    <!--Pagina Inicial-->
+    <EditTextPreference
+        android:defaultValue="@string/pref_pagina_inicial_default"
+        android:inputType="text"
+        android:key="@string/pref_pagina_inicial_key"
+        android:singleLine="true"
+        android:title="@string/pref_pagina_inicial_label" />
+
+    <!--Abrir pagina automaticamente-->
+    <CheckBoxPreference
+        android:defaultValue="@string/pref_browser_auto_default"
+        android:key="@string/pref_browser_auto_key"
+        android:title="@string/pref_browser_auto_label" />
+
+</PreferenceScreen>

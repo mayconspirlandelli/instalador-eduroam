@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="white" type="color">#ffffffff</item>
+    <item name="black" type="color">#ff606060</item>
+
+    <!--Material Desing-->
+    <color name="colorPrimary">#03A9F4</color>
+    <color name="colorPrimaryDark">#0D47A1</color>
+    <color name="textColorPrimary">#FFFFFF</color>
+    <color name="textColorPrimaryInverse">#ff6a6a6a</color>
+    <color name="windowBackground">#FFFFFF</color>
+    <color name="navigationBarColor">#000000</color>
+    <color name="colorAccent">#0D47A1</color>
+
+</resources>

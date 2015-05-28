@@ -1,34 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.ufg.inf.instaladoreduroam" >
-
+    package="br.ufg.inf.instaladoreduroam"
+    android:installLocation="auto">
     <uses-feature android:name="android.hardware.wifi" />
-
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/logo_inf_vert"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/MaterialAppTheme" >
         <activity
-            android:name=".HomeActivity"
+            android:noHistory="true"
+            android:name=".app.InicialActivity"
             android:label="@string/app_name" >
-            android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:name=".InicialActivity"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".app.PreferenciasActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".AdicionarActivity"
+            android:name=".AdicionarRedeActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name=".app.SobreActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name=".app.RedeWifiActivity"
+            android:label="@string/title_activity_adicionar_eduroam" >
+        </activity>
+        <activity
+            android:name=".app.ContasActivity"
             android:label="@string/app_name" >
         </activity>
     </application>

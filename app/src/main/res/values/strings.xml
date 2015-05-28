@@ -16,13 +16,34 @@
     <string name="lable_lembrar_senha">Lembrar Senha?</string>
     <string name="lable_exibir_senha">Exibir Senha</string>
 
+    <!-- SharePreference TODO: verifica remoção -->
     <string name="prefs_ssid">prefs_ssid</string>
     <string name="prefs_ssid_default">"\"eduroam\""</string>
     <string name="prefs_usuario">prefs_usuario</string>
     <string name="prefs_senha">prefs_senha</string>
 
+    <!-- Settings Preferencias do Usuario SSID -->
+    <string name="pref_ssid_key">ssid</string>
+    <string name="pref_ssid_label">SSID da Rede</string>
+    <string name="pref_ssid_default">eduroam</string>
 
+    <!-- Settings Preferencias do Usuario Salvar Senha -->
+    <string name="pref_salvar_senha_key">salvar_senha</string>
+    <string name="pref_salvar_senha_label">Salvar Senha?</string>
+    <string name="pref_salvar_senha_default">true</string>
+
+    <!-- Settings Preferencias do Usuario Pagina inicial -->
+    <string name="pref_pagina_inicial_key">pagina_inicial</string>
+    <string name="pref_pagina_inicial_label">Página Inicial</string>
+    <string name="pref_pagina_inicial_default">http://www.inf.ufg.br/</string>
+
+    <!-- Settings Preferencias do Usuario Abrir Browser Automatico na Pagina inicial -->
+    <string name="pref_browser_auto_key">browser_auto</string>
+    <string name="pref_browser_auto_label">Navegador Automático?</string>
+    <string name="pref_browser_auto_default">true</string>
+
+    <!-- TODO remover esta linha -->
     <string name="uri_site_inf">http://www.inf.ufg.br/</string>
-
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

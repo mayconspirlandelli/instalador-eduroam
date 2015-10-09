@@ -43,6 +43,9 @@
             android:name=".app.ContasActivity"
             android:label="@string/app_name" >
         </activity>
+        <provider
+            android:authorities="br.ufg.inf.instaladoreduroam.app"
+            android:name=".data.EduroamProvider" />
     </application>
 
 </manifest>

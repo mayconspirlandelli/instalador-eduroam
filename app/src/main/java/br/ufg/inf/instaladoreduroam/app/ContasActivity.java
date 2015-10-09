@@ -2,6 +2,7 @@ package br.ufg.inf.instaladoreduroam.app;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,14 +14,18 @@ import br.ufg.inf.instaladoreduroam.entidades.Conta;
 /**
  * Created by Maycon on 13/05/2015.
  */
-public class ContasActivity extends ActionBarActivity {
+public class ContasActivity extends ActionBarActivity implements ContaListFragment.AoClicarNaConta  {
 
     private Button btnAdicionarRede;
+
+    private FragmentManager mFragmentManager;
+    private ContaListFragment mListFragament;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contas);
+
     }
 
     @Override
@@ -52,18 +57,30 @@ public class ContasActivity extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        mFragmentManager = getSupportFragmentManager();
 
         if (verificarExisteConta()) {
             exibirListaContas();
+            //Carrega a ContaListFragment.
+
         } else {
             abrirTelaEdicaoConta();
+            //Carrega o ContaDialogFragment.
         }
     }
 
 
     private void exibirListaContas() {
+        ContaListFragment fragment = new ContaListFragment();
+        mFragmentManager.beginTransaction().replace(R.id.content_frame_conta, fragment).commit();
     }
 
+    private void abrirTelaEdicaoConta() {
+        //TODO: abrir o EdicaoContaFragment.
+        ContaDialogFragment fragment = new ContaDialogFragment();
+        mFragmentManager.beginTransaction().replace(R.id.content_frame_conta, fragment).commit();
+
+    }
     
     /**
      * Método responsável por verifica se o aplicativo já tem um conta criada.
@@ -79,17 +96,8 @@ public class ContasActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
-    private void abrirTelaEdicaoConta() {
-        //TODO: abrir o EdicaoContaFragment.
-    }
 
-
-    private void onClickItemListern(){
-        //TODO: obter a conta do item,
-        Conta conta = new Conta();
-        abrirTelaRedeWiFiEduroam(conta);
-    }
-
+    //Pagina 277
     private void adicionarConta(){
         abrirTelaEdicaoConta();
     }
@@ -103,5 +111,8 @@ public class ContasActivity extends ActionBarActivity {
     private void salvarConta(){}
 
 
-
+    @Override
+    public void clicouNaConta(Conta conta) {
+        abrirTelaRedeWiFiEduroam(conta);
+    }
 }

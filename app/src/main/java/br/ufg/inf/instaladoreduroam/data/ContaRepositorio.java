@@ -70,7 +70,7 @@ public class ContaRepositorio {
 
         String where = null;
         String[] whereArgs = null;
-        if(nomeConta != null) {
+        if(nomeConta != null && !nomeConta.isEmpty()) {
             where = ContaEntry.COLUMN_LOGIN_UNICO + " LIKE ?";
             whereArgs = new String[]{ "%" + nomeConta + "%"};
         }

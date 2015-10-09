@@ -11,13 +11,16 @@ import android.test.AndroidTestCase;
 import java.util.Map;
 import java.util.Set;
 
-import br.ufg.inf.instaladoreduroam.entidades.Conta;
+import br.ufg.inf.instaladoreduroam.data.EduroamContract.ContaEntry;
 import br.ufg.inf.instaladoreduroam.utils.PollingCheck;
 
 /**
  * Created by Maycon on 28/05/2015.
  */
 public class TestUtilities extends AndroidTestCase {
+
+   static final String TEST_LOGIN = "maycon";
+    static final String TEST_SENHA = "123";
 
     static void validateCursor(String error, Cursor valueCursor, ContentValues expectedValues) {
         assertTrue("Empty cursor returned. " + error, valueCursor.moveToFirst());
@@ -39,9 +42,11 @@ public class TestUtilities extends AndroidTestCase {
     }
 
     static ContentValues createContentValuesConta() {
-        Conta conta = new Conta("maycon", "123");
-        ContentValues contentValues = EduroamContract.createContentValuesConta(conta);
-        return contentValues;
+        // Create a new map of values, where column names are the keys
+        ContentValues testValues = new ContentValues();
+        testValues.put(ContaEntry.COLUMN_LOGIN_UNICO, TEST_LOGIN);
+        testValues.put(ContaEntry.COLUMN_SENHA, TEST_SENHA);
+        return testValues;
     }
 
     /*

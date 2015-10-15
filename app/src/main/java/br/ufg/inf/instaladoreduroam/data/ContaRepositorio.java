@@ -90,4 +90,22 @@ public class ContaRepositorio {
         conta.setSenha(cursor.getString(cursor.getColumnIndex(ContaEntry.COLUMN_SENHA)));
         return conta;
     }
+
+    /**
+     * Método responsável por verificar se existe uma conta.
+     */
+    public boolean verificarExisteConta(){
+        Cursor cursor = context.getContentResolver().query(
+                ContaEntry.CONTENT_URI,
+                null,   // leaving "columns" null just returns all the columns.
+                null,   // cols for "where" clause
+                null,   // Values for the "where" clause
+                null    // sort order
+        );
+        if(cursor.moveToFirst()) {
+            return true; //Existe conta.
+        } else {
+            return false; //Não existe conta.
+        }
+    }
 }

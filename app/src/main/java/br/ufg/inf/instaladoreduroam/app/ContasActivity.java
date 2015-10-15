@@ -9,23 +9,22 @@ import android.view.MenuItem;
 import android.widget.Button;
 
 import br.ufg.inf.instaladoreduroam.R;
+import br.ufg.inf.instaladoreduroam.data.ContaRepositorio;
 import br.ufg.inf.instaladoreduroam.entidades.Conta;
+
 
 /**
  * Created by Maycon on 13/05/2015.
  */
-public class ContasActivity extends ActionBarActivity implements ContaListFragment.AoClicarNaConta  {
+public class ContasActivity extends ActionBarActivity implements ContaListFragment.AoClicarNaConta {
 
     private Button btnAdicionarRede;
-
-    private FragmentManager mFragmentManager;
     private ContaListFragment mListFragament;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contas);
-
     }
 
     @Override
@@ -57,38 +56,33 @@ public class ContasActivity extends ActionBarActivity implements ContaListFragme
     @Override
     protected void onResume() {
         super.onResume();
-        mFragmentManager = getSupportFragmentManager();
 
-        if (verificarExisteConta()) {
-            exibirListaContas();
-            //Carrega a ContaListFragment.
-
-        } else {
-            abrirTelaEdicaoConta();
+        //Carrega a ContaListFragment.
+       if (!verificarExisteConta()) {
             //Carrega o ContaDialogFragment.
+            abrirTelaEdicaoConta();
         }
     }
 
-
-    private void exibirListaContas() {
-        ContaListFragment fragment = new ContaListFragment();
-        mFragmentManager.beginTransaction().replace(R.id.content_frame_conta, fragment).commit();
-    }
-
     private void abrirTelaEdicaoConta() {
-        //TODO: abrir o EdicaoContaFragment.
-        ContaDialogFragment fragment = new ContaDialogFragment();
-        mFragmentManager.beginTransaction().replace(R.id.content_frame_conta, fragment).commit();
-
+        FragmentManager fm = getSupportFragmentManager();
+        ContaDialogFragment contaDialog = new ContaDialogFragment();
+        contaDialog.show(fm, "fragment_dialog_conta");
     }
-    
+
     /**
      * Método responsável por verifica se o aplicativo já tem um conta criada.
      *
      * @return
      */
     private boolean verificarExisteConta() {
-        return true;
+        ContaRepositorio mRepositorio = new ContaRepositorio(this);
+
+        if (mRepositorio.verificarExisteConta()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private void abrirTelaRedeWiFiEduroam(Conta conta) {
@@ -98,17 +92,19 @@ public class ContasActivity extends ActionBarActivity implements ContaListFragme
 
 
     //Pagina 277
-    private void adicionarConta(){
+    private void adicionarConta() {
         abrirTelaEdicaoConta();
     }
 
-    private void removerConta(){}
+    private void removerConta() {
+    }
 
-    private void editarConta(){
+    private void editarConta() {
         abrirTelaEdicaoConta(); //Envia a Conta
     }
 
-    private void salvarConta(){}
+    private void salvarConta() {
+    }
 
 
     @Override

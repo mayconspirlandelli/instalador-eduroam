@@ -2,7 +2,6 @@ package br.ufg.inf.instaladoreduroam.app;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -17,11 +16,15 @@ import br.ufg.inf.instaladoreduroam.entidades.Conta;
 /**
  * Created by Maycon on 13/05/2015.
  */
-public class ContasActivity extends ActionBarActivity implements ContaListFragment.AoClicarNaConta {
+public class ContasActivity extends ActionBarActivity
+        implements ContaListFragment.AoClicarNaConta,
+        ContaDialogFragment.AoSalvarConta,
+        ContaListFragment.AoExcluirHoteis {
 
     private Button btnAdicionarRede;
     private ContaListFragment mListFragament;
     private Toolbar mToolbar;
+    private ContaRepositorio mRepositorio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,7 @@ public class ContasActivity extends ActionBarActivity implements ContaListFragme
         getSupportActionBar().setTitle(R.string.title_fragment_conta);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
 
+        mRepositorio = new ContaRepositorio(this);
     }
 
     @Override
@@ -66,16 +70,15 @@ public class ContasActivity extends ActionBarActivity implements ContaListFragme
         super.onResume();
 
         //Carrega a ContaListFragment.
-       if (!verificarExisteConta()) {
+        if (!verificarExisteConta()) {
             //Carrega o ContaDialogFragment.
             abrirTelaEdicaoConta();
         }
     }
 
     private void abrirTelaEdicaoConta() {
-        FragmentManager fm = getSupportFragmentManager();
-        ContaDialogFragment contaDialog = new ContaDialogFragment();
-        contaDialog.show(fm, "fragment_dialog_conta");
+        ContaDialogFragment contaDialog = ContaDialogFragment.newInstance(null);
+        contaDialog.abrirDialog(getSupportFragmentManager());
     }
 
     /**
@@ -84,8 +87,6 @@ public class ContasActivity extends ActionBarActivity implements ContaListFragme
      * @return
      */
     private boolean verificarExisteConta() {
-        ContaRepositorio mRepositorio = new ContaRepositorio(this);
-
         if (mRepositorio.verificarExisteConta()) {
             return true;
         } else {
@@ -98,25 +99,36 @@ public class ContasActivity extends ActionBarActivity implements ContaListFragme
         startActivity(intent);
     }
 
-
     //Pagina 277
     private void adicionarConta() {
         abrirTelaEdicaoConta();
-    }
-
-    private void removerConta() {
     }
 
     private void editarConta() {
         abrirTelaEdicaoConta(); //Envia a Conta
     }
 
-    private void salvarConta() {
-    }
-
-
     @Override
     public void clicouNaConta(Conta conta) {
         abrirTelaRedeWiFiEduroam(conta);
+    }
+
+    /**
+     *  Método responsável por excluir as contas selecionadas.
+     * @param conta
+     */
+    @Override
+    public void salvouConta(Conta conta) {
+        mRepositorio.salvar(conta);
+//        mListFragament.limparBusca(); erro aqui TODO
+    }
+
+    /**
+     * Método responsável por excluir as contas selecionadas.
+     * @param conta
+     */
+    @Override
+    public void exclusaoCompleta(Conta conta) {
+        mRepositorio.excluir(conta);
     }
 }

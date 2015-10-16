@@ -14,6 +14,11 @@ public class Conta implements Serializable {
     public Conta() {
     }
 
+    public Conta(String login, String senha) {
+        this.login = login;
+        this.senha = senha;
+    }
+
     public Conta(long id, String login, String senha) {
         this.id = id;
         this.login = login;

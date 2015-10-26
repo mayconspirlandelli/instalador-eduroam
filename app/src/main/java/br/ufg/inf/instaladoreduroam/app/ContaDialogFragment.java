@@ -73,8 +73,9 @@ public class ContaDialogFragment extends DialogFragment
         //Exibir o teclado virtual ao exibir o Dialog.
         getDialog().getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-        //Setar o titulo do Dialog
-        getDialog().setTitle(R.string.title_dialog_fragment_conta);
+
+        //Setar o titulo do Dialog - Novo
+        getDialog().setTitle(R.string.title_dialog_fragment_conta_novo);
 
         txtLogin = (EditText) view.findViewById(R.id.edit_user);
         txtLogin.requestFocus();
@@ -82,10 +83,11 @@ public class ContaDialogFragment extends DialogFragment
         txtSenha.setOnEditorActionListener(this);
 
         if (mConta != null) {
+            //Setar o titulo do Dialog - Editar
+            getDialog().setTitle(R.string.title_dialog_fragment_conta_editar);
             txtLogin.setText(mConta.getLogin());
             txtSenha.setText(mConta.getSenha());
         }
-
         return view;
     }
 

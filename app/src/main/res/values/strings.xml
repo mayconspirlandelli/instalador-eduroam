@@ -54,6 +54,8 @@
     <string name="menu_action_edit">Editar</string>
     <string name="menu_action_delete">Excluir</string>
 
+    <!--Ações do Menu do Toolbar.-->
+    <string name="menu_action_new">Nova</string>
 
 
 </resources>

@@ -165,7 +165,7 @@ public class EduroamProvider extends ContentProvider {
 
         switch (match) {
             case CONTA:
-                rowsUpdated = db.delete(EduroamContract.ContaEntry.TABLE_NAME, selection, selectionArgs);
+                rowsUpdated = db.update(EduroamContract.ContaEntry.TABLE_NAME, values, selection, selectionArgs);
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);

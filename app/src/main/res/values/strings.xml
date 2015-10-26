@@ -49,5 +49,10 @@
     <string name="title_fragment_conta">Contas</string>
     <string name="title_dialog_fragment_conta">Novo</string>
 
+    <!--Ações do Menu Contexto para editar ou remover item da lista, usado na classe ContaListFragment.-->
+    <string name="menu_action_edit">Editar</string>
+    <string name="menu_action_delete">Excluir</string>
+
+
 
 </resources>

@@ -8,10 +8,14 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.CursorAdapter;
 import android.text.TextUtils;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import br.ufg.inf.instaladoreduroam.R;
 import br.ufg.inf.instaladoreduroam.adapter.ContaCursorAdapter;
 import br.ufg.inf.instaladoreduroam.data.ContaRepositorio;
 import br.ufg.inf.instaladoreduroam.entidades.Conta;
@@ -20,8 +24,7 @@ import br.ufg.inf.instaladoreduroam.entidades.Conta;
  * Created by Maycon on 09/10/2015.
  */
 public class ContaListFragment extends ListFragment
-        implements AdapterView.OnItemLongClickListener,
-        LoaderManager.LoaderCallbacks<Cursor> {
+        implements LoaderManager.LoaderCallbacks<Cursor> {
 
     ContaRepositorio mRepositorio;
     ListView mListView;
@@ -41,8 +44,10 @@ public class ContaListFragment extends ListFragment
         mAdapter = new ContaCursorAdapter(getActivity(), null);
         mListView = getListView(); //Obtem os itens da ListView da tela atual.
         setListAdapter(mAdapter);
-        mListView.setOnItemLongClickListener(this);
         getLoaderManager().initLoader(0, null, this);
+
+        /** Registering context menu for the listview  https://developer.android.com/guide/topics/ui/menus.html */
+        registerForContextMenu(getListView());
     }
 
     @Override
@@ -50,7 +55,7 @@ public class ContaListFragment extends ListFragment
         super.onListItemClick(l, v, position, id);
 
         Activity activity = getActivity();
-        if(activity instanceof  AoClicarNaConta) {
+        if (activity instanceof AoClicarNaConta) {
             Cursor cursor = (Cursor) l.getItemAtPosition(position);
             Conta conta = mRepositorio.obterContaFromCursor(cursor);
 
@@ -69,10 +74,47 @@ public class ContaListFragment extends ListFragment
     }
 
     @Override
-    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        //TODO: Abrir o ContaDialogFragment ao segurar um item da lista.
-        return false;
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getActivity().getMenuInflater();
+        inflater.inflate(R.menu.menu_acao_list, menu);
     }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.menu_action_edit:
+                editarOuExcluirItemListaConta(info.position, false);
+                return true;
+            case R.id.menu_action_delete:
+                editarOuExcluirItemListaConta(info.position, true);
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+    /**
+     * Método para excluir/editar  a conta do item clicado.
+     * @param position do item na LIstView.
+     * @param excluir true para excluir item e false para editar item.
+     */
+    private void editarOuExcluirItemListaConta(int position, boolean excluir) {
+        Activity activity = getActivity();
+        Cursor cursor = (Cursor) mListView.getItemAtPosition(position);
+        Conta conta = mRepositorio.obterContaFromCursor(cursor);
+
+        if ((activity instanceof AoEditarConta) && (!excluir)) {
+            AoEditarConta listener = (AoEditarConta) activity;
+            listener.editarConta(conta);
+        } else if ( (activity instanceof AoExcluirContas) && (excluir) )  {
+            AoExcluirContas listener = (AoExcluirContas) activity;
+            listener.exclusaoCompleta(conta);
+            limparBusca();
+        }
+    }
+
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
@@ -91,5 +133,13 @@ public class ContaListFragment extends ListFragment
 
     public interface AoClicarNaConta {
         void clicouNaConta(Conta conta);
+    }
+
+    public interface AoExcluirContas {
+        void exclusaoCompleta(Conta conta);
+    }
+
+    public interface AoEditarConta {
+        void editarConta(Conta conta);
     }
 }

@@ -19,7 +19,8 @@ import br.ufg.inf.instaladoreduroam.entidades.Conta;
 public class ContasActivity extends ActionBarActivity
         implements ContaListFragment.AoClicarNaConta,
         ContaDialogFragment.AoSalvarConta,
-        ContaListFragment.AoExcluirHoteis {
+        ContaListFragment.AoExcluirContas,
+        ContaListFragment.AoEditarConta {
 
     private Button btnAdicionarRede;
     private ContaListFragment mListFragament;
@@ -72,12 +73,12 @@ public class ContasActivity extends ActionBarActivity
         //Carrega a ContaListFragment.
         if (!verificarExisteConta()) {
             //Carrega o ContaDialogFragment.
-            abrirTelaEdicaoConta();
+            abrirTelaEdicaoConta(null);
         }
     }
 
-    private void abrirTelaEdicaoConta() {
-        ContaDialogFragment contaDialog = ContaDialogFragment.newInstance(null);
+    private void abrirTelaEdicaoConta(Conta conta) {
+        ContaDialogFragment contaDialog = ContaDialogFragment.newInstance(conta);
         contaDialog.abrirDialog(getSupportFragmentManager());
     }
 
@@ -101,11 +102,7 @@ public class ContasActivity extends ActionBarActivity
 
     //Pagina 277
     private void adicionarConta() {
-        abrirTelaEdicaoConta();
-    }
-
-    private void editarConta() {
-        abrirTelaEdicaoConta(); //Envia a Conta
+        abrirTelaEdicaoConta(null);
     }
 
     @Override
@@ -130,5 +127,10 @@ public class ContasActivity extends ActionBarActivity
     @Override
     public void exclusaoCompleta(Conta conta) {
         mRepositorio.excluir(conta);
+    }
+
+    @Override
+    public void editarConta(Conta conta) {
+        abrirTelaEdicaoConta(conta);
     }
 }

@@ -71,8 +71,31 @@ public class ContaDialogFragment extends DialogFragment
         View view = inflater.inflate(R.layout.fragment_dialog_conta, container, false);
 
         //Exibir o teclado virtual ao exibir o Dialog.
+        //SOFT_INPUT_ADJUST_NOTHING - o teclado sobrepoe a tela.
+        //FLAG_LOCAL_FOCUS_MODE - foca no EditText.
+        //SOFT_INPUT_STATE_VISIBLE - abre o teclado automaticamente.
+
+//        getDialog().getWindow().setSoftInputMode(
+//                WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE |
+//        WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+// ou o efeito é o mesmo.
+//
         getDialog().getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE |
+                        WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING |
+                        WindowManager.LayoutParams.FLAG_LOCAL_FOCUS_MODE);
+
+
+//        getDialog().getWindow().setSoftInputMode(
+//                WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE |
+//                        WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
+//
+
+
+        //TODO: https://android-arsenal.com/details/1/1113
+
+
+
 
         //Setar o titulo do Dialog - Novo
         getDialog().setTitle(R.string.title_dialog_fragment_conta_novo);

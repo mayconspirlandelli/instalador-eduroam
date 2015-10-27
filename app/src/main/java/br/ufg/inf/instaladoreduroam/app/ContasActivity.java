@@ -93,7 +93,6 @@ public class ContasActivity extends ActionBarActivity
         startActivity(intent);
     }
 
-    //Pagina 277
     private void adicionarConta() {
         abrirTelaEdicaoConta(null);
     }
@@ -110,7 +109,6 @@ public class ContasActivity extends ActionBarActivity
     @Override
     public void salvouConta(Conta conta) {
         mRepositorio.salvar(conta);
-//        mListFragament.limparBusca(); erro aqui TODO
     }
 
     /**

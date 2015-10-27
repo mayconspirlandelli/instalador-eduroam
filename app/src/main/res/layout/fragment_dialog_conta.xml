@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
     android:id="@+id/scrollViewDialogConta">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingBottom="24dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:paddingTop="20dp"
         android:orientation="vertical">
 
         <TextView
@@ -38,6 +44,50 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:imeOptions="actionDone" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/chck_exibir_senha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lable_exibir_senha" />
+
+            <CheckBox
+                android:id="@+id/chck_lembrar_senha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lable_lembrar_senha" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="52dp"
+            android:paddingTop="8dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/tds"
+                android:text="Conectar"
+                android:padding="8dp"
+                android:textSize="8sp"
+                android:layout_width="64dp"
+                android:layout_height="36dp " />
+
+            <Button
+                android:id="@+id/tdsd"
+                android:text="Cancelar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+
+        </LinearLayout>
+
 
     </LinearLayout>
 </ScrollView>

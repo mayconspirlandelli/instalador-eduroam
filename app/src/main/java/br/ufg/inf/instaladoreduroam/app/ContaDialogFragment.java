@@ -4,12 +4,19 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.Toolbar;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -20,13 +27,19 @@ import br.ufg.inf.instaladoreduroam.entidades.Conta;
  * Created by Maycon on 09/10/2015.
  */
 public class ContaDialogFragment extends DialogFragment
-        implements TextView.OnEditorActionListener {
+        implements TextView.OnEditorActionListener,
+        CheckBox.OnCheckedChangeListener,
+        Toolbar.OnClickListener,
+Toolbar.OnMenuItemClickListener{
 
     private static final String DIALOG_TAG = "editDialog";
     private static final String EXTRA_CONTA = "conta";
 
-    private EditText txtLogin;
-    private EditText txtSenha;
+    private EditText editLogin;
+    private EditText editSenha;
+    private CheckBox chckExibirSenha;
+    private Toolbar mToolbar;
+
     private Conta mConta;
 
     public static ContaDialogFragment newInstance(Conta conta) {
@@ -36,28 +49,6 @@ public class ContaDialogFragment extends DialogFragment
         dialog.setArguments(bundle);
         return dialog;
     }
-
-//    @Override
-//    public Dialog onCreateDialog(Bundle savedInstanceState) {
-//        return new AlertDialog.Builder(getActivity())
-//                .setIcon(R.drawable.ic_eduroam_1)
-//                .setTitle(R.string.title_dialog_fragment_conta)
-//                .setPositiveButton("OK",
-//                        new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//
-//                            }
-//                        })
-//                .setNegativeButton("Cancelar",
-//                        new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                dialog.cancel();
-//                            }
-//                        })
-//                .create();
-//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,46 +61,46 @@ public class ContaDialogFragment extends DialogFragment
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dialog_conta, container, false);
 
+        mToolbar = (Toolbar) view.findViewById(R.id.toolbar_dialog);
+        mToolbar.setTitle(R.string.title_dialog_fragment_conta_novo);
+        mToolbar.inflateMenu(R.menu.menu_dialog_fragment_contas);
+        mToolbar.setNavigationIcon(R.drawable.abc_ic_clear_mtrl_alpha);
+        mToolbar.setNavigationOnClickListener(this);
+        mToolbar.setOnMenuItemClickListener(this);
+
+
         //Exibir o teclado virtual ao exibir o Dialog.
         //SOFT_INPUT_ADJUST_NOTHING - o teclado sobrepoe a tela.
         //FLAG_LOCAL_FOCUS_MODE - foca no EditText.
         //SOFT_INPUT_STATE_VISIBLE - abre o teclado automaticamente.
-
 //        getDialog().getWindow().setSoftInputMode(
 //                WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE |
 //        WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 // ou o efeito é o mesmo.
-//
         getDialog().getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE |
                         WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING |
                         WindowManager.LayoutParams.FLAG_LOCAL_FOCUS_MODE);
 
 
-//        getDialog().getWindow().setSoftInputMode(
-//                WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE |
-//                        WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
-//
 
+        //Remover o título do Dialog e substituir pelo title do Toolbar.
+        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 
-        //TODO: https://android-arsenal.com/details/1/1113
+        editLogin = (EditText) view.findViewById(R.id.edit_user);
+        editLogin.requestFocus();
 
+        editSenha = (EditText) view.findViewById(R.id.edit_password);
+        editSenha.setOnEditorActionListener(this);
 
-
-
-        //Setar o titulo do Dialog - Novo
-        getDialog().setTitle(R.string.title_dialog_fragment_conta_novo);
-
-        txtLogin = (EditText) view.findViewById(R.id.edit_user);
-        txtLogin.requestFocus();
-        txtSenha = (EditText) view.findViewById(R.id.edit_password);
-        txtSenha.setOnEditorActionListener(this);
+        chckExibirSenha = (CheckBox) view.findViewById(R.id.chck_exibir_senha);
+        chckExibirSenha.setOnCheckedChangeListener(this);
 
         if (mConta != null) {
             //Setar o titulo do Dialog - Editar
-            getDialog().setTitle(R.string.title_dialog_fragment_conta_editar);
-            txtLogin.setText(mConta.getLogin());
-            txtSenha.setText(mConta.getSenha());
+            mToolbar.setTitle(R.string.title_dialog_fragment_conta_editar);
+            editLogin.setText(mConta.getLogin());
+            editSenha.setText(mConta.getSenha());
         }
         return view;
     }
@@ -117,24 +108,7 @@ public class ContaDialogFragment extends DialogFragment
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (EditorInfo.IME_ACTION_DONE == actionId) {
-
-            Activity activity = getActivity();
-            if (activity instanceof AoSalvarConta) {
-                if (mConta == null) {
-                    mConta = new Conta(
-                            txtLogin.getText().toString(),
-                            txtSenha.getText().toString());
-                } else {
-                    mConta.setLogin(txtLogin.getText().toString());
-                    mConta.setSenha(txtSenha.getText().toString());
-                }
-                AoSalvarConta listener = (AoSalvarConta) activity;
-                listener.salvouConta(mConta);
-
-                //Fecha o dialog.
-                dismiss();
-                return true;
-            }
+            salvarConta();
         }
         return false;
     }
@@ -144,6 +118,56 @@ public class ContaDialogFragment extends DialogFragment
             show(fm, DIALOG_TAG);
         }
     }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (!isChecked) {
+            //Exibe a senha.
+            editSenha.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        } else {
+            //Oculta a senha.
+            editSenha.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+        }
+    }
+
+    /**
+     * Metodo para o botão de "X" para fechar o DialogFragment
+     * @param v
+     */
+    @Override
+    public void onClick(View v) {
+        dismiss();
+    }
+
+    private void salvarConta(){
+        Activity activity = getActivity();
+        if (activity instanceof AoSalvarConta) {
+            if (mConta == null) {
+                mConta = new Conta(
+                        editLogin.getText().toString(),
+                        editSenha.getText().toString());
+            } else {
+                mConta.setLogin(editLogin.getText().toString());
+                mConta.setSenha(editSenha.getText().toString());
+            }
+            AoSalvarConta listener = (AoSalvarConta) activity;
+            listener.salvouConta(mConta);
+
+            //Fecha o dialog.
+            dismiss();
+        }
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.menu_action_save:
+                salvarConta();
+                return true;
+        }
+        return false;
+    }
+
 
     public interface AoSalvarConta {
         void salvouConta(Conta conta);

@@ -73,6 +73,7 @@ public class ContasActivity extends ActionBarActivity
     private void abrirTelaEdicaoConta(Conta conta) {
         ContaDialogFragment contaDialog = ContaDialogFragment.newInstance(conta);
         contaDialog.abrirDialog(getSupportFragmentManager());
+
     }
 
     /**

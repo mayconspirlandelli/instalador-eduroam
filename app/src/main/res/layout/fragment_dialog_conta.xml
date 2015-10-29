@@ -1,93 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:fillViewport="true"
-    android:id="@+id/scrollViewDialogConta">
+    android:layout_gravity="center"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:paddingBottom="24dp"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp"
-        android:paddingTop="20dp"
+        android:layout_alignParentTop="true"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/label_user"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_user"
-            android:textStyle="bold"/>
-
-        <EditText
-            android:id="@+id/edit_user"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:imeOptions="actionNext"
-            android:inputType="textEmailAddress"
-            android:hint="@string/example_user" />
-
-        <TextView
-            android:id="@+id/label_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_password"
-            android:textStyle="bold"/>
-
-        <EditText
-            android:id="@+id/edit_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:imeOptions="actionDone" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal">
-
-            <CheckBox
-                android:id="@+id/chck_exibir_senha"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/lable_exibir_senha" />
-
-            <CheckBox
-                android:id="@+id/chck_lembrar_senha"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/lable_lembrar_senha" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="52dp"
-            android:paddingTop="8dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/tds"
-                android:text="Conectar"
-                android:padding="8dp"
-                android:textSize="8sp"
-                android:layout_width="64dp"
-                android:layout_height="36dp " />
-
-            <Button
-                android:id="@+id/tdsd"
-                android:text="Cancelar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-
-        </LinearLayout>
-
+        <include
+            android:id="@+id/toolbar_dialog"
+            layout="@layout/toolbar_dialog_fragment" />
 
     </LinearLayout>
-</ScrollView>
+
+    <ScrollView
+        android:id="@+id/scrollViewDialogConta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingTop="20dp"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:paddingBottom="24dp"
+            android:orientation="vertical">
+
+            <!--<TextView-->
+                <!--android:id="@+id/label_user"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/label_user"-->
+                <!--android:textStyle="bold" />-->
+
+            <EditText
+                android:id="@+id/edit_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Insera seu login único"
+                android:imeOptions="actionNext"
+                android:inputType="textEmailAddress" />
+
+            <!--<TextView-->
+                <!--android:id="@+id/label_password"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/label_password"-->
+                <!--android:textStyle="bold" />-->
+
+            <EditText
+                android:id="@+id/edit_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionDone"
+                android:hint="Senha"
+                android:inputType="textPassword" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/chck_exibir_senha"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lable_exibir_senha" />
+
+                <CheckBox
+                    android:id="@+id/chck_lembrar_senha"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lable_lembrar_senha" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
+
+
+

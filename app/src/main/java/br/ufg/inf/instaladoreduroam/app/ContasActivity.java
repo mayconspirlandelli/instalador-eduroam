@@ -51,6 +51,7 @@ public class ContasActivity extends ActionBarActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
+                startActivity(new Intent(this, PreferenciasActivity.class));
                 return true;
             case R.id.action_new:
                 adicionarConta();

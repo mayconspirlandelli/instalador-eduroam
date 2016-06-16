@@ -58,5 +58,10 @@
     <string name="menu_action_new">Nova</string>
     <string name="menu_action_save">Salvar</string>
 
+    <!--  Mensagem de Alerta -->
+    <string name="message_campo_obrigatorio_login">Informe o login!</string>
+    <string name="message_campo_obrigatorio_senha">Informe a senha!</string>
+
+
 
 </resources>

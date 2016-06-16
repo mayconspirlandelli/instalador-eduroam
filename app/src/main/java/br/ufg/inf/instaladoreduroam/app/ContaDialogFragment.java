@@ -1,6 +1,7 @@
 package br.ufg.inf.instaladoreduroam.app;
 
 import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
@@ -30,7 +31,7 @@ public class ContaDialogFragment extends DialogFragment
         implements TextView.OnEditorActionListener,
         CheckBox.OnCheckedChangeListener,
         Toolbar.OnClickListener,
-Toolbar.OnMenuItemClickListener{
+        Toolbar.OnMenuItemClickListener {
 
     private static final String DIALOG_TAG = "editDialog";
     private static final String EXTRA_CONTA = "conta";
@@ -54,9 +55,12 @@ Toolbar.OnMenuItemClickListener{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mConta = (Conta) getArguments().getSerializable(EXTRA_CONTA);
-
-        //setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_NoTitleBar_Fullscreen);
-        setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Light_NoTitleBar_Fullscreen);
+        //setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Light_NoTitleBar_Fullscreen);
+        if (Build.VERSION.SDK_INT < 11) {
+            setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Light_NoTitleBar_Fullscreen);
+        } else {
+            setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Material_Light_NoActionBar_Fullscreen);
+        }
     }
 
     @Override
@@ -84,7 +88,6 @@ Toolbar.OnMenuItemClickListener{
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE |
                         WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING |
                         WindowManager.LayoutParams.FLAG_LOCAL_FOCUS_MODE);
-
 
 
         //Remover o título do Dialog e substituir pelo title do Toolbar.
@@ -135,6 +138,7 @@ Toolbar.OnMenuItemClickListener{
 
     /**
      * Metodo para o botão de "X" para fechar o DialogFragment
+     *
      * @param v
      */
     @Override
@@ -142,23 +146,40 @@ Toolbar.OnMenuItemClickListener{
         dismiss();
     }
 
-    private void salvarConta(){
+    private void salvarConta() {
         Activity activity = getActivity();
-        if (activity instanceof AoSalvarConta) {
-            if (mConta == null) {
-                mConta = new Conta(
-                        editLogin.getText().toString(),
-                        editSenha.getText().toString());
-            } else {
-                mConta.setLogin(editLogin.getText().toString());
-                mConta.setSenha(editSenha.getText().toString());
-            }
-            AoSalvarConta listener = (AoSalvarConta) activity;
-            listener.salvouConta(mConta);
 
-            //Fecha o dialog.
-            dismiss();
+        if (validaDados()) {
+            if (activity instanceof AoSalvarConta) {
+                //TODO: validar dados
+                if (mConta == null) {
+                    mConta = new Conta(
+                            editLogin.getText().toString(),
+                            editSenha.getText().toString());
+                } else {
+                    mConta.setLogin(editLogin.getText().toString());
+                    mConta.setSenha(editSenha.getText().toString());
+                }
+                AoSalvarConta listener = (AoSalvarConta) activity;
+                listener.salvouConta(mConta);
+
+                //Fecha o dialog.
+                dismiss();
+            }
         }
+    }
+
+    private boolean validaDados() {
+        if (editLogin.getText().toString().isEmpty() || editLogin.getText().toString().equals("")) {
+            Util.campoObrigatorio(getActivity(), getString(R.string.message_campo_obrigatorio_login));
+            return false;
+        }
+
+        if (editSenha.getText().toString().isEmpty() || editSenha.getText().toString().equals("")) {
+            Util.campoObrigatorio(getActivity(), getString(R.string.message_campo_obrigatorio_senha));
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -170,7 +191,6 @@ Toolbar.OnMenuItemClickListener{
         }
         return false;
     }
-
 
     public interface AoSalvarConta {
         void salvouConta(Conta conta);

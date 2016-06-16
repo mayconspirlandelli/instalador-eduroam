@@ -195,4 +195,5 @@ public class TestEduroamProvider extends AndroidTestCase {
 //        contaObserver.waitForNotificationOrFail();
 //        mContext.getContentResolver().unregisterContentObserver(contaObserver);
 //    }
+
 }

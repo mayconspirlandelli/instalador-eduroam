@@ -8,6 +8,9 @@ import br.ufg.inf.instaladoreduroam.entidades.Conta;
 /**
  * Created by Maycon on 26/05/2015.
  */
+
+/** Não precisa dessa classe por entando. 08/6/16 */
+
 public class EdicaoContaFragment extends Fragment {
 
     @Override

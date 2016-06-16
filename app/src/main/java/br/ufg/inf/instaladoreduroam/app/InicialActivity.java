@@ -99,7 +99,7 @@ public class InicialActivity extends ActionBarActivity {
      * @return
      */
     private boolean verificarExisteConta(){
-        return true;
+        return false;
     }
 
     private void abrirTelaRedeWiFiEduroam(){
@@ -108,7 +108,8 @@ public class InicialActivity extends ActionBarActivity {
     }
 
     private void abrirTelaContas(){
-
+        Intent intent = new Intent(this, ContasActivity.class);
+        startActivity(intent);
     }
 
 }

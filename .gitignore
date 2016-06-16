@@ -98,8 +98,6 @@ assinatura.jks
 APK/
 app/proguard-rules.pro
 app/app.iml
-app/build.gradle
-build.gradle
 gradle.properties
 gradlew
 gradlew.bat
